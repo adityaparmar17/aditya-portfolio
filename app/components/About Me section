@@ -1,0 +1,65 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+export default function About() {
+  return (
+    <section
+      id="about"
+      className="bg-black px-6 py-24 text-white"
+    >
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true }}
+        >
+          <p className="mb-3 text-blue-400 font-semibold">ABOUT ME</p>
+
+          <h2 className="text-5xl font-bold">
+            Building the future,
+            <span className="text-blue-500"> one project at a time.</span>
+          </h2>
+
+          <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-400">
+            Hi, I'm <span className="font-semibold text-white">Aditya Parmar</span>,
+            a BCA (AI & ML) student passionate about building practical AI
+            applications. I believe the best way to learn is by creating real
+            projects and sharing the journey publicly.
+          </p>
+
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-gray-400">
+            Through this website, I document everything I build—from AI tools
+            and web applications to experiments, tutorials, and lessons learned.
+            My goal is to become a world-class AI engineer while helping others
+            learn alongside me.
+          </p>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <h3 className="text-3xl font-bold text-blue-500">10+</h3>
+              <p className="mt-2 text-gray-400">
+                AI & Web Projects Planned
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <h3 className="text-3xl font-bold text-blue-500">2028</h3>
+              <p className="mt-2 text-gray-400">
+                BCA (AI & ML) Graduation
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <h3 className="text-3xl font-bold text-blue-500">∞</h3>
+              <p className="mt-2 text-gray-400">
+                Passion for Learning
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
