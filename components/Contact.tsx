@@ -1,5 +1,10 @@
 "use client";
 
+"use client";
+
+import { useState } from "react";
+import { supabase } from "../src/lib/supabase";
+
 import {
   FaGithub,
   FaLinkedin,
@@ -8,7 +13,41 @@ import {
 } from "react-icons/fa";
 
 export default function Contact() {
-  return (
+  const [name, setName] = useState("");
+const [email, setEmail] = useState("");
+const [message, setMessage] = useState("");
+const [status, setStatus] = useState("");
+const [loading, setLoading] = useState(false);
+
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  setLoading(true);
+  setStatus("");
+
+  const { error } = await supabase
+    .from("contact_messages")
+    .insert([
+      {
+        name,
+        email,
+        message,
+      },
+    ]);
+
+  if (error) {
+    console.error(error);
+    setStatus("Something went wrong. Please try again.");
+  } else {
+    setStatus("Message sent successfully!");
+    setName("");
+    setEmail("");
+    setMessage("");
+  }
+
+  setLoading(false);
+};
+    return (
     <section
       id="contact"
       className="min-h-screen bg-black text-white flex items-center justify-center px-6"
@@ -69,6 +108,69 @@ export default function Contact() {
 
         </div>
 
+        <form
+  onSubmit={handleSubmit}
+  className="mt-16 max-w-2xl mx-auto text-left space-y-6"
+>
+  <div>
+    <label className="block text-sm text-gray-400 mb-2">
+      Name
+    </label>
+
+    <input
+      type="text"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      placeholder="Your name"
+      required
+      className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500 transition"
+    />
+  </div>
+
+  <div>
+    <label className="block text-sm text-gray-400 mb-2">
+      Email
+    </label>
+
+    <input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="your@email.com"
+      required
+      className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500 transition"
+    />
+  </div>
+
+  <div>
+    <label className="block text-sm text-gray-400 mb-2">
+      Message
+    </label>
+
+    <textarea
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      placeholder="Tell me about your project or opportunity..."
+      required
+      rows={5}
+      className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-5 py-4 text-white outline-none focus:border-blue-500 transition resize-none"
+    />
+  </div>
+
+  <button
+    type="submit"
+    disabled={loading}
+    className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-8 py-4 rounded-xl font-semibold transition"
+  >
+    {loading ? "Sending..." : "Send Message"}
+  </button>
+
+  {status && (
+    <p className="text-center text-sm text-gray-300">
+      {status}
+    </p>
+  )}
+</form>
         <div className="mt-16 flex justify-center gap-6 flex-wrap">
 
           <a
